@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { generateMnemonic, mnemonicToSeedSync } from "bip39";
 import { useEffect, useState } from "react";
@@ -87,6 +88,18 @@ export default function Home() {
             Secure your wallet by writing down these 12 recovery words. Keep
             them safe and never share them with anyone.
           </p>
+          <div className="mt-6 mb-8 flex justify-center">
+            <div className="inline-flex items-center gap-2 bg-orange-500/10 border border-orange-500/20 rounded-full px-4 py-2">
+              <img
+                src="/Y_Combinator_logo.svg"
+                alt="Y Combinator"
+                className="w-5 h-5 rounded-full"
+              />
+              <span className="text-xs text-zinc-300 font-medium">
+                Not backed by YC
+              </span>
+            </div>
+          </div>
         </div>
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 text-center mb-4">
           <div className="flex items-center justify-center gap-3 mb-3">
