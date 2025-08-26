@@ -2,13 +2,24 @@
 import { generateMnemonic, mnemonicToSeedSync } from "bip39";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Check, Copy, ArrowRight, AlertTriangle } from "lucide-react";
+import {
+  Check,
+  Copy,
+  ArrowRight,
+  AlertTriangle,
+  Plus,
+  Lock,
+  Info,
+} from "lucide-react";
 import { derivePath } from "ed25519-hd-key";
 import { Keypair } from "@solana/web3.js";
 
 export default function Home() {
   const [mnemonic, setMnemonic] = useState<string>("");
   const [copied, setCopied] = useState(false);
+  const [copiedWalletIndex, setCopiedWalletIndex] = useState<number | null>(
+    null
+  );
   const [state, setState] = useState<"mnemonic" | "wallet">("mnemonic");
   const [walletAddressList, setWalletAddressList] = useState<string[]>([]);
 
@@ -25,6 +36,16 @@ export default function Home() {
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error("Failed to copy: ", err);
+    }
+  };
+
+  const handleCopyWalletAddress = async (address: string, index: number) => {
+    try {
+      await navigator.clipboard.writeText(address);
+      setCopiedWalletIndex(index);
+      setTimeout(() => setCopiedWalletIndex(null), 2000);
+    } catch (err) {
+      console.error("Failed to copy wallet address: ", err);
     }
   };
 
@@ -59,9 +80,7 @@ export default function Home() {
             <div className="rounded-full overflow-hidden bg-white p-3">
               <img src="/solana.jpg" alt="Solana" width={50} height={50} />
             </div>
-            <h1 className="text-6xl font-bold text-white">
-              Solana Web Wallet
-            </h1>
+            <h1 className="text-6xl font-bold text-white">Solana Web Wallet</h1>
           </div>
 
           <p className="text-slate-300 text-lg max-w-2xl mx-auto">
@@ -194,19 +213,7 @@ export default function Home() {
                   size="lg"
                   className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-lg hover:shadow-blue-500/25 transition-all duration-300"
                 >
-                  <svg
-                    className="w-5 h-5 mr-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                    />
-                  </svg>
+                  <Plus className="w-5 h-5 mr-2" />
                   Add Wallet
                 </Button>
               </div>
@@ -217,19 +224,7 @@ export default function Home() {
               {walletAddressList.length === 0 ? (
                 <div className="text-center py-12">
                   <div className="w-16 h-16 mx-auto mb-4 bg-zinc-800 rounded-full flex items-center justify-center">
-                    <svg
-                      className="w-8 h-8 text-zinc-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                      />
-                    </svg>
+                    <Lock className="w-8 h-8 text-zinc-500" />
                   </div>
                   <h3 className="text-lg font-medium text-zinc-300 mb-2">
                     No Wallets Yet
@@ -272,11 +267,15 @@ export default function Home() {
                             size="sm"
                             className="text-zinc-400 hover:text-zinc-200 transition-colors"
                             onClick={() =>
-                              navigator.clipboard.writeText(address)
+                              handleCopyWalletAddress(address, index)
                             }
                             title="Copy Address"
                           >
-                            <Copy className="w-4 h-4" />
+                            {copiedWalletIndex === index ? (
+                              <Check className="w-4 h-4 text-green-400" />
+                            ) : (
+                              <Copy className="w-4 h-4" />
+                            )}
                           </Button>
                         </div>
                       </div>
@@ -296,19 +295,7 @@ export default function Home() {
             {walletAddressList.length > 0 && (
               <div className="mt-6 pt-6 border-t border-zinc-800">
                 <div className="flex items-center justify-center gap-2 text-zinc-500 text-sm">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
+                  <Info className="w-4 h-4" />
                   <span>
                     All wallets are derived from the same recovery phrase
                   </span>
