@@ -35,7 +35,18 @@ export default function Home() {
             them safe and never share them with anyone.
           </p>
         </div>
-
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 text-center mb-4">
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <AlertTriangle className="w-6 h-6 text-zinc-400" />
+            <h3 className="text-lg font-semibold text-zinc-200">
+              Security Reminder
+            </h3>
+          </div>
+          <p className="text-zinc-300 text-sm">
+            Never share your recovery phrase with anyone. Anyone with these
+            words can access your wallet and funds.
+          </p>
+        </div>
         <div className="bg-zinc-900 rounded-2xl border border-zinc-800 p-8 mb-8 shadow-2xl">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-semibold text-white mb-2">
@@ -51,14 +62,12 @@ export default function Home() {
               ? mnemonic.split(" ").map((word, index) => (
                   <div
                     key={index}
-                    className="bg-zinc-800 rounded-xl p-3 border border-zinc-700 hover:border-zinc-600 transition-all duration-300 hover:scale-105 group hover:bg-zinc-700/50"
+                    className="bg-zinc-800 rounded-xl p-3 border border-zinc-700"
                   >
                     <div className="text-xs text-slate-400 mb-1 font-mono">
                       {String(index + 1).padStart(2, "0")}
                     </div>
-                    <div className="text-white font-medium text-sm group-hover:text-zinc-200 transition-colors">
-                      {word}
-                    </div>
+                    <div className="text-white font-medium text-sm">{word}</div>
                   </div>
                 ))
               : Array.from({ length: 12 }).map((word, index) => (
@@ -79,9 +88,9 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button
               onClick={handleCopy}
-              variant="outline"
+              variant="border"
               size="lg"
-              className="bg-zinc-800 border-zinc-700 text-white hover:bg-zinc-700 hover:border-zinc-600 transition-all duration-300 min-w-[140px] group"
+              className="min-w-[140px] group"
             >
               {copied ? (
                 <>
@@ -96,29 +105,13 @@ export default function Home() {
               )}
             </Button>
 
-            <Button
-              size="lg"
-              className="bg-zinc-700 hover:bg-zinc-600 text-white shadow-lg hover:shadow-zinc-500/25 transition-all duration-300 min-w-[140px] group"
-            >
+            <Button variant="zinc" size="lg" className="min-w-[140px] group">
               <span className="group-hover:translate-x-1 transition-transform">
                 Next
               </span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
-        </div>
-
-        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 text-center">
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <AlertTriangle className="w-6 h-6 text-zinc-400" />
-            <h3 className="text-lg font-semibold text-zinc-200">
-              Security Reminder
-            </h3>
-          </div>
-          <p className="text-zinc-300 text-sm">
-            Never share your recovery phrase with anyone. Anyone with these
-            words can access your wallet and funds.
-          </p>
         </div>
       </div>
     </div>
