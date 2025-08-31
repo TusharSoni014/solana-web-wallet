@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
         <ThemeProvider
           attribute="class"
@@ -34,7 +34,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <div className="relative z-50">{children}</div>
         </ThemeProvider>
       </body>
     </html>
