@@ -1,7 +1,7 @@
 import { useWalletStore } from "@/store/wallet.store";
 import { generateMnemonic } from "bip39";
 import { Button } from "./ui/button";
-import { Wallet, Plus, ArrowRight, Key } from "lucide-react";
+import { Plus, ArrowRight, Key } from "lucide-react";
 
 export default function StartScreen() {
   const { setMnemonic, setState } = useWalletStore();
@@ -16,20 +16,7 @@ export default function StartScreen() {
 
   return (
     <div className="bg-zinc-900 rounded-2xl border border-zinc-800 p-8 mb-8 shadow-2xl">
-      <div className="text-center mb-8">
-        <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full border border-blue-500/30 flex items-center justify-center">
-          <Wallet className="w-10 h-10 text-blue-400" />
-        </div>
-        <h2 className="text-3xl font-bold text-white mb-3">
-          Welcome to Solana Web Wallet
-        </h2>
-        <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-          Choose how you&apos;d like to get started with your Solana wallet
-        </p>
-      </div>
-
       <div className="grid md:grid-cols-2 gap-6 mb-8">
-        {/* Create New Wallet Option */}
         <div className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 backdrop-blur-sm rounded-xl border border-zinc-700/50 p-6 hover:border-blue-500/30 transition-all duration-300">
           <div className="text-center">
             <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-full border border-blue-500/30 flex items-center justify-center transition-transform duration-300">
@@ -76,7 +63,7 @@ export default function StartScreen() {
             <h3 className="text-xl font-semibold text-white mb-3">
               Import Existing Wallet
             </h3>
-            
+
             <p className="text-slate-400 text-sm mb-6 leading-relaxed">
               Restore your existing Solana wallet using your recovery phrase.
               Access your funds and continue where you left off.
