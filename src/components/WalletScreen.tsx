@@ -76,18 +76,13 @@ export default function WalletScreen() {
               </>
             )}
           </Button>
-          <Button
-            onClick={handleAddWallet}
-            size="lg"
-            className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-lg hover:shadow-blue-500/25 transition-all duration-300"
-          >
+          <Button onClick={handleAddWallet} size="lg">
             <Plus className="w-5 h-5 mr-2" />
             Add Wallet
           </Button>
         </div>
       </div>
 
-      {/* Wallet List */}
       <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2">
         {walletAddressList.length === 0 ? (
           <div className="text-center py-12">
@@ -108,7 +103,6 @@ export default function WalletScreen() {
               className="bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 backdrop-blur-sm rounded-xl border border-zinc-700/50"
             >
               <div className="p-5">
-                {/* Wallet Header */}
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-lg border border-blue-500/30 flex items-center justify-center">
@@ -128,7 +122,6 @@ export default function WalletScreen() {
                     </div>
                   </div>
 
-                  {/* Action Buttons */}
                   <div className="flex items-center gap-2">
                     <Button
                       variant="ghost"
@@ -157,7 +150,6 @@ export default function WalletScreen() {
         )}
       </div>
 
-      {/* Footer Info */}
       {walletAddressList.length > 0 && (
         <div className="mt-6 pt-6 border-t border-zinc-800">
           <div className="flex items-center justify-center gap-2 text-zinc-500 text-sm">
