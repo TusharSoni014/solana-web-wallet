@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Droplet } from "lucide-react";
@@ -14,8 +14,18 @@ export default function FaucetPage() {
   const [recipientError, setRecipientError] = useState("");
   const [isRequesting, setIsRequesting] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState<number>(0.5);
-  const amounts = [0.5, 1, 1.5, 2, 2.5];
+  const [balance, setBalance] = useState<number>(0);
   const { connection } = useConnection();
+
+  useEffect(() => {
+    const getBalance = async () => {
+      const balance = await connection.getBalance(new PublicKey(recipient));
+      setBalance(balance);
+    };
+    getBalance();
+  }, [connection, recipient]);
+
+  const amounts = [0.5, 1, 1.5, 2, 2.5];
 
   const sanitizeRecipient = (value: string) =>
     value
@@ -109,9 +119,19 @@ export default function FaucetPage() {
         <div className="rounded-xl border border-zinc-700/50 p-5 w-[90vw] max-w-md">
           <div className="space-y-4">
             <div>
-              <label className="block text-sm text-zinc-300 mb-2">
-                Recipient address
-              </label>
+              <div className="w-full flex justify-between items-center mb-2 ">
+                <label className="block text-sm text-zinc-300">
+                  Recipient address
+                </label>
+                {recipient && !isRequesting && isBase58(recipient) ? (
+                  <p className="text-sm text-zinc-300">
+                    Balance:{" "}
+                    <span className="text-cyan-400">
+                      {balance / LAMPORTS_PER_SOL} SOL
+                    </span>
+                  </p>
+                ) : null}
+              </div>
               <Input
                 placeholder="Enter Solana address (devnet)"
                 value={recipient}
@@ -154,7 +174,7 @@ export default function FaucetPage() {
             <Button
               type="button"
               size="sm"
-              disabled={!recipient || isRequesting}
+              disabled={!recipient || isRequesting || !isBase58(recipient)}
               className="w-full"
               onClick={() => handleRequestAirdrop()}
             >
